@@ -6,10 +6,10 @@ const pause1 = document.getElementById("PauseButton")
 timer[0].textContent = "bruh"
 
 
-let dateTimerBruv = ""
-let booleanThing = true
-let runningCount = 0
-let misterVariable = 0
+let dateTimerBruv = "";
+let booleanThing = true;
+let runningCount = 0;
+let misterVariable = 0;
 
 
 function setInitalTime() {
@@ -25,9 +25,11 @@ function countUp() {
             const timeUpdated = (whyBruh.getTime() - dateTimerBruv.getTime()) / 1000
 
             // this lets pauses work
-            runningCount = timeUpdated
-            const usedThing = timeUpdated + misterVariable
-
+            runningCount = Math.floor(timeUpdated) + Math.floor(misterVariable);
+            console.log(misterVariable,"bruh");
+            console.log(timeUpdated,"started now");
+            let usedThing = Math.floor(timeUpdated) + Math.floor(misterVariable);
+            console.log(usedThing,"number good")
             if (usedThing >= (60 * 60)) {
                 const hours = usedThing / (60 * 60)
                 const minutes = usedThing / 60
