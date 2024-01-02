@@ -1,6 +1,6 @@
 const timer = document.getElementsByClassName("timer")
 const play = document.getElementById("playButton")
-const stop1 = document.getElementById("stopButton")
+// const stop1 = document.getElementById("stopButton")
 const pause1 = document.getElementById("PauseButton")
 
 timer[0].textContent = "bruh"
@@ -25,11 +25,10 @@ function countUp() {
             const timeUpdated = (whyBruh.getTime() - dateTimerBruv.getTime()) / 1000
 
             // this lets pauses work
-            runningCount = Math.floor(timeUpdated) + Math.floor(misterVariable);
-            console.log(misterVariable, "bruh");
-            console.log(timeUpdated, "started now");
-            let usedThing = Math.floor(timeUpdated) + Math.floor(misterVariable);
-            console.log(usedThing, "number good")
+            runningCount = timeUpdated + misterVariable;
+
+            let usedThing = timeUpdated + misterVariable;
+
             if (usedThing >= (60 * 60)) {
                 const hours = usedThing / (60 * 60)
                 const minutes = usedThing / 60
@@ -61,16 +60,20 @@ function countUp() {
 play.addEventListener("click", doEverything)
 function doEverything() {
     misterVariable = 0
+
+        play.textContent = "Reset"
+
     setInitalTime()
     countUp()
 }
-stop1.addEventListener("click", StopTime)
-function StopTime() {
-    misterVariable = 0
-    booleanThing = false
-}
+// stop1.addEventListener("click", StopTime)
+// function StopTime() {
+//     misterVariable = 0
+//     booleanThing = false
+// }
 pause1.addEventListener("click", PauseTime)
 function PauseTime() {
+    pause1.textContent = booleanThing ?"Unpause":"Pause"
     booleanThing = !booleanThing
     if (booleanThing) {
         misterVariable = runningCount
