@@ -26,10 +26,10 @@ function countUp() {
 
             // this lets pauses work
             runningCount = Math.floor(timeUpdated) + Math.floor(misterVariable);
-            console.log(misterVariable,"bruh");
-            console.log(timeUpdated,"started now");
+            console.log(misterVariable, "bruh");
+            console.log(timeUpdated, "started now");
             let usedThing = Math.floor(timeUpdated) + Math.floor(misterVariable);
-            console.log(usedThing,"number good")
+            console.log(usedThing, "number good")
             if (usedThing >= (60 * 60)) {
                 const hours = usedThing / (60 * 60)
                 const minutes = usedThing / 60
@@ -60,11 +60,13 @@ function countUp() {
 }
 play.addEventListener("click", doEverything)
 function doEverything() {
+    misterVariable = 0
     setInitalTime()
     countUp()
 }
 stop1.addEventListener("click", StopTime)
 function StopTime() {
+    misterVariable = 0
     booleanThing = false
 }
 pause1.addEventListener("click", PauseTime)
@@ -75,5 +77,4 @@ function PauseTime() {
         setInitalTime()
         countUp()
     }
-
 }
