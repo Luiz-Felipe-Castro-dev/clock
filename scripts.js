@@ -62,6 +62,7 @@ function doEverything() {
     misterVariable = 0
 
         play.textContent = "Reset"
+        pause1.textContent = "Pause"
 
     setInitalTime()
     countUp()
