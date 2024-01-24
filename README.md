@@ -1,1 +1,1 @@
-https://luiz-felipe-castro-dev.github.io/clock/
+https://luiz-felipe-castro-dev.github.io/timer/
