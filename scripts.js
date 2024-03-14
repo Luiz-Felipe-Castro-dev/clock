@@ -1,84 +1,122 @@
+// startClock() is imported from clock logic
+
 const timer = document.getElementsByClassName("timer")
 const play = document.getElementById("playButton")
-// const stop1 = document.getElementById("stopButton")
 const pause1 = document.getElementById("PauseButton")
 
+const selecti = document.getElementById('selecti')
+
+const inputTimer = document.getElementById('timerEdit')
+const editButton = document.getElementById('editButton')
+
+
 timer[0].textContent = "bruh"
-
-
-let dateTimerBruv = "";
-let booleanThing = true;
-let runningCount = 0;
-let misterVariable = 0;
-
-
-function setInitalTime() {
-    dateTimerBruv = new Date()
-    booleanThing = true
-}
-
-function countUp() {
-    if (booleanThing) {
-        setTimeout(function () {
-            const whyBruh = new Date()
-            // time in seconds
-            const timeUpdated = (whyBruh.getTime() - dateTimerBruv.getTime()) / 1000
-
-            // this lets pauses work
-            runningCount = timeUpdated + misterVariable;
-
-            let usedThing = timeUpdated + misterVariable;
-
-            if (usedThing >= (60 * 60)) {
-                const hours = usedThing / (60 * 60)
-                const minutes = usedThing / 60
-                const EditedString = String(Math.floor(hours)).padStart(2, '0') +
-                    ":" + String(Math.floor(minutes % 60)).padStart(2, '0') + ":" + String(Math.floor(usedThing % 60)).padStart(2, '0')
-
-                timer[0].textContent = EditedString
-                document.title = EditedString
-                countUp()
-                return
-            }
-            if (usedThing >= 60) {
-                const minutes = usedThing / 60
-                const EditedString = String(Math.floor(minutes)).padStart(2, '0') + ":" + String(Math.floor(usedThing % 60)).padStart(2, '0')
-                timer[0].textContent = EditedString
-                document.title = EditedString
-                countUp()
-                return
-            }
-
-
-            timer[0].textContent = "00:" + String(Math.floor((usedThing))).padStart(2, '0')
-            document.title = "00:" + String(Math.floor(usedThing)).padStart(2, '0')
-            countUp()
-        }, 100)
+const time1 = localStorage.getItem("time")
+if(time1 && typeof Number(time1) == 'number'){
+    function formatTime(string) {
+        return String(Math.floor(string)).padStart(2, '0')
     }
-
+    const minutes1 = time1 / 60
+    const EditedString = formatTime(minutes1) + ":" + formatTime(time1 % 60)
+    timer[0].textContent = EditedString
 }
+
+let InitialTime = new Date();
+let isClockRunning = false;
+let runningCount = 0;
+let storedTime = 0;
+
+let editedTime = 0
+
+let category = "D "
+
+let isFirstClick = true
+
+
 play.addEventListener("click", doEverything)
 function doEverything() {
-    misterVariable = 0
+    storedTime = 0
 
-        play.textContent = "Reset"
-        pause1.textContent = "Pause"
-
-    setInitalTime()
-    countUp()
+    play.textContent = "Reset"
+    pause1.textContent = "Pause"
+    if(editedTime>0){
+        play.textContent = "play"
+        storedTime = editedTime
+        editedTime = 0
+    }
+    if(isFirstClick){
+        isFirstClick = false
+    }else{
+        const time = localStorage.getItem("time")
+        if(time && typeof Number(time) == 'number'){
+            localStorage.removeItem('time');
+        }
+    }
+    startClock()
 }
-// stop1.addEventListener("click", StopTime)
-// function StopTime() {
-//     misterVariable = 0
-//     booleanThing = false
-// }
-pause1.addEventListener("click", PauseTime)
-function PauseTime() {
-    pause1.textContent = booleanThing ?"Unpause":"Pause"
-    booleanThing = !booleanThing
-    if (booleanThing) {
-        misterVariable = runningCount
-        setInitalTime()
-        countUp()
+
+pause1.addEventListener("click", pauseTime)
+function pauseTime() {
+    pause1.textContent = isClockRunning ? "Unpause" : "Pause"
+    isClockRunning = !isClockRunning
+    if (isClockRunning) {
+        // this takes the previous running count and stores it before resetting the running count back to stored time + current time
+        if(editedTime>0){
+            storedTime = editedTime
+            editedTime = 0
+        }else{
+
+            storedTime = runningCount
+        }
+        startClock()
     }
 }
+//
+
+//select
+
+selecti.addEventListener('change', handleSelecti)
+
+function handleSelecti() {
+    category = selecti.value
+}
+//
+
+
+
+//edit input
+
+editButton.addEventListener("click",editInput)
+function editInput(){
+    inputTimer.value
+
+    function convertToSeconds(time) {
+        const parts = time.split(':'); // Split the time string by colon
+        let seconds = 0;
+    
+        if (parts.length === 3) {
+       
+            const hours = parseInt(parts[0], 10);
+            const minutes = parseInt(parts[1], 10);
+            seconds = parseInt(parts[2], 10) + (hours * 3600) + (minutes * 60);
+        } else if (parts.length === 2) {
+      
+            const minutes = parseInt(parts[0], 10);
+            seconds = parseInt(parts[1], 10) + (minutes * 60);
+        } else if (parts.length === 1) {
+    
+            seconds = parseInt(parts[0], 10);
+        }
+    
+        return seconds;
+    }
+    if(isClockRunning){
+        isClockRunning = false
+    }
+  
+    editedTime = convertToSeconds(inputTimer.value)
+    if(editedTime)
+    localStorage.setItem("time",editedTime)
+    timer[0].textContent = inputTimer?.value
+}
+
