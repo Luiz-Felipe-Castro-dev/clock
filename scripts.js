@@ -3,7 +3,7 @@ const play = document.getElementById("playButton")
 // const stop1 = document.getElementById("stopButton")
 const pause1 = document.getElementById("PauseButton")
 
-timer[0].textContent = "bruh"
+timer[0].textContent = "00:00"
 
 
 let dateTimerBruv = "";
